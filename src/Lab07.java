@@ -10,6 +10,9 @@ interface LabSet<E> {
     boolean addAll(Collection<? extends E> c);
     boolean removeAll(Collection<?> c);
     boolean retainAll(Collection<?> c);
+    void clear();
+    boolean isEmpty();
+    Iterator<E>  iterator(); 
 }
 
 class HashMapSet<E> implements LabSet<E> {
@@ -75,6 +78,19 @@ class HashMapSet<E> implements LabSet<E> {
     public boolean retainAll(Collection<?> c) {
         return map.keySet().retainAll(c);
     }
+
+    @Override
+    public void clear(){
+        map.clear();
+    }
+    @Override
+    public boolean isEmpty(){
+        return map.isEmpty();
+    }
+    @Override
+    public Iterator<E> iterator() {
+        return map.keySet().iterator();
+    }
 }
 
 public class Lab07 {
@@ -89,9 +105,14 @@ public class Lab07 {
         // Print size
         System.out.println("Size: " + set.size());
 
+        System.out.print("Iterator: ");
+        Iterator<String> iterator = set.iterator();
+        while (iterator.hasNext()) {
+            System.out.print(iterator.next() + " ");
+        }
+        set.clear();
         // Check if an element is present
-        System.out.println("Contains APPLE: " + set.contains("APPLE"));
-        System.out.println("Contains Tiger: " + set.contains("Tiger"));
+        System.out.println("\nContains Tiger: " + set.contains("Tiger"));
 
         // Remove an element
         System.out.println("Remove TON: " + set.remove("TON"));
@@ -102,8 +123,14 @@ public class Lab07 {
         // New collection
         List<String> arr = Arrays.asList("APPLE", "ORANGE", "BANANA");
 
+        System.out.print("Iterator: ");
+        Iterator<String> iterator2 = arr.iterator();
+        while (iterator2.hasNext()) {
+            System.out.print(iterator2.next() + " ");
+        }
+
         // Check containsAll
-        System.out.println("ContainsAll arr: " + set.containsAll(arr));
+        System.out.println("\nContainsAll arr: " + set.containsAll(arr));
 
         // AddAll
         System.out.println("AddAll arr: " + set.addAll(arr));
@@ -119,5 +146,7 @@ public class Lab07 {
 
         // RemoveAll
         System.out.println("RemoveAll arr: " + set.removeAll(arr));
+
+        System.out.println("Is Empty: " + set.isEmpty());
     }
 }
